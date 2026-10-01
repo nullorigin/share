@@ -4048,12 +4048,6 @@ pub struct __pthread_rwlock_arch_t {
 
 // ######## shared, from /home/matt/.c2r/tree/libmnl/examples/genl/genl-family-get.c
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct mnl_socket {
-    _opaque: [u8; 0],
-}
-
 pub fn main() {
     let args: Vec<std::ffi::CString> = std::env::args().map(|a| std::ffi::CString::new(a).unwrap()).collect();
     let mut argv: Vec<*mut core::ffi::c_char> = args.iter().map(|a| a.as_ptr() as *mut core::ffi::c_char).collect();
@@ -5651,12 +5645,6 @@ pub struct nf_ct_tcp_flags {
 
 // ######## shared, from /home/matt/.c2r/tree/libmnl/examples/netfilter/nfct-create-batch.c
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct mnl_nlmsg_batch {
-    _opaque: [u8; 0],
-}
-
 pub fn main() {
     let code = unsafe { c_main() };
     std::process::exit(code as i32);
@@ -6461,12 +6449,6 @@ pub const IFF_MULTICAST: i32 = 4096;
 pub const IFF_PORTSEL: i32 = 8192;
 
 pub const IFF_AUTOMEDIA: i32 = 16384;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct iface {
-    _opaque: [u8; 0],
-}
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8324,23 +8306,11 @@ pub const _CTYPE_H: i32 = 1;
 
 #[repr(C)]
 #[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nfgenmsg {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct nf_conntrack {
     _opaque: [u8; 0],
 }
 
 // ######## shared, from /home/matt/.c2r/tree/libnetfilter_conntrack/examples/nfct-mnl-dump-labels.c
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nfct_labelmap {
-    _opaque: [u8; 0],
-}
 
 #[repr(C)]
 #[derive(Copy, Clone, PartialEq, Eq)]
@@ -11511,14 +11481,6 @@ pub struct icmp {
     pub icmp_dun: icmp_Anon8e4f1607,
 }
 
-// ######## shared, from /home/matt/.c2r/tree/libnetfilter_queue/src/extra/icmp.c
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct pkt_buff {
-    _opaque: [u8; 0],
-}
-
 // ######## shared, from /usr/include/netinet/if_ether.h
 
 pub const __NETINET_IF_ETHER_H: i32 = 1;
@@ -12072,18 +12034,6 @@ pub struct udphdr {
 
 #[repr(C)]
 #[derive(Copy, Clone, PartialEq, Eq)]
-pub struct iphdr {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct ip6_hdr {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct pkt_buff {
     pub mac_header: *mut u8,
     pub network_header: *mut u8,
@@ -12568,36 +12518,6 @@ pub const NFTNL_CHAIN_MAX: i32 = 15;
 
 pub type nftnl_chain_attr = i32;
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_chain {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_rule {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_rule_iter {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_chain_list {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_chain_list_iter {
-    _opaque: [u8; 0],
-}
-
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/libnftnl/common.h
 
 pub type nftnl_output_type = i32;
@@ -12607,12 +12527,6 @@ pub type nftnl_output_flags = i32;
 pub type nftnl_cmd_type = i32;
 
 pub type nftnl_parse_type = i32;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_parse_err {
-    _opaque: [u8; 0],
-}
 
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/linux/netfilter/nf_tables_compat.h
 
@@ -12649,36 +12563,6 @@ pub type nftnl_cttimeout_array_tcp = i32;
 pub type nftnl_cttimeout_array_udp = i32;
 
 pub type nftnl_tunnel_type = i32;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_tunnel_opt {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_tunnel_opts {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_obj_list {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_obj_list_iter {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_obj {
-    _opaque: [u8; 0],
-}
 
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/linux_list.h
 
@@ -13126,12 +13010,6 @@ pub struct nftnl_set {
     pub expr_list: list_head,
 }
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_set_list {
-    _opaque: [u8; 0],
-}
-
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/expr.h
 
 #[repr(C)]
@@ -13264,54 +13142,12 @@ pub const NFTNL_TABLE_MAX: i32 = 6;
 
 pub type nftnl_table_attr = i32;
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_table {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_table_list {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_table_list_iter {
-    _opaque: [u8; 0],
-}
-
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/libnftnl/rule.h
 
 // macro nftnl_chain_nlmsg_build_hdr = nftnl_nlmsg_build_hdr (not constant; expanded at each use)
 pub const NFTNL_RULE_MAX: i32 = 9;
 
 pub type nftnl_rule_attr = i32;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_expr {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_expr_iter {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_rule_list {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_rule_list_iter {
-    _opaque: [u8; 0],
-}
 
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/libnftnl/set.h
 
@@ -13322,30 +13158,6 @@ pub const NFTNL_SET_MAX: i32 = 19;
 pub const NFTNL_SET_ELEM_MAX: i32 = 11;
 
 pub type nftnl_set_attr = i32;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_set {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_set_list_iter {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_set_elem {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_set_elems_iter {
-    _opaque: [u8; 0],
-}
 
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/libnftnl/gen.h
 
@@ -13358,41 +13170,9 @@ pub const NFTNL_FLOWTABLE_MAX: i32 = 9;
 
 pub type nftnl_flowtable_attr = i32;
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_flowtable {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_flowtable_list {
-    _opaque: [u8; 0],
-}
-
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/libnftnl/ruleset.h
 
 pub type nftnl_ruleset_type = i32;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_ruleset {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_parse_ctx {
-    _opaque: [u8; 0],
-}
-
-// ######## shared, from /home/matt/.c2r/tree/libnftnl/src/batch.c
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct list_head {
-    _opaque: [u8; 0],
-}
 
 // ######## shared, from /home/matt/.c2r/tree/nftables/include/linux/netfilter_arp.h
 
@@ -13407,24 +13187,6 @@ pub const NF_ARP_FORWARD: i32 = 2;
 pub const NF_ARP_NUMHOOKS: i32 = 3;
 
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/src/chain.c
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct hlist_node {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_str_array {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct hlist_head {
-    _opaque: [u8; 0],
-}
 
 unsafe extern "C" fn nftnl_hooknum2str(mut family: i32, mut hooknum: i32) -> *const core::ffi::c_char {
     match family {
@@ -13486,28 +13248,6 @@ unsafe extern "C" fn djb_hash(mut key: *const core::ffi::c_char) -> u32 {
         }
     }
     return hash;
-}
-
-// ######## shared, from /home/matt/.c2r/tree/libnftnl/src/expr.c
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct expr_ops {
-    _opaque: [u8; 0],
-}
-
-// ######## shared, from /home/matt/.c2r/tree/libnftnl/src/expr/bitwise.c
-
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub union nftnl_data_reg {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct attr_policy {
-    _opaque: [u8; 0],
 }
 
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/linux/netfilter/nf_log.h
@@ -14198,12 +13938,6 @@ pub const NFTNL_TRACE_MAX: i32 = 21;
 
 pub type nftnl_trace_attr = i32;
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_trace {
-    _opaque: [u8; 0],
-}
-
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/include/libnftnl/udata.h
 
 pub const NFTNL_UDATA_TABLE_MAX: i32 = 2;
@@ -14237,18 +13971,6 @@ pub type nftnl_udata_set_types = i32;
 pub type nftnl_udata_set_elem_types = i32;
 
 pub type nftnl_udata_set_elem_flags = i32;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_udata {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_udata_buf {
-    _opaque: [u8; 0],
-}
 
 // ######## shared, from /home/matt/.c2r/tree/libnftnl/tests/nft-chain-test.c
 
@@ -14287,12 +14009,6 @@ pub const NFT_CTX_DEFAULT: i32 = 0;
 pub type nft_debug_level = i32;
 
 pub type nft_optimize_flags = i32;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nft_ctx {
-    _opaque: [u8; 0],
-}
 
 // ######## shared, from /home/matt/.c2r/tree/nftables/include/gmputil.h
 
@@ -14458,12 +14174,6 @@ unsafe extern "C" fn concat_subtype_id(mut type_: u32, mut n: u32) -> u32 {
 
 unsafe extern "C" fn concat_subtype_lookup(mut type_: u32, mut n: u32) -> *const datatype {
     return unsafe { datatype_lookup((unsafe { concat_subtype_id(type_, n) }) as datatypes) };
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct error_record {
-    _opaque: [u8; 0],
 }
 
 // ######## shared, from /home/matt/.c2r/tree/nftables/include/list.h
@@ -14752,12 +14462,6 @@ pub struct cookie {
 
 #[repr(C)]
 #[derive(Copy, Clone, PartialEq, Eq)]
-pub struct parser_state {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct scope {
     _opaque: [u8; 0],
 }
@@ -14839,12 +14543,6 @@ unsafe extern "C" fn nft_output_numeric_symbol(mut octx: *const output_ctx) -> b
 
 unsafe extern "C" fn nft_output_terse(mut octx: *const output_ctx) -> bool {
     return ((*octx).flags & (NFT_CTX_OUTPUT_TERSE as u32)) != 0;
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct symbol_table {
-    _opaque: [u8; 0],
 }
 
 #[repr(C)]
@@ -16040,12 +15738,6 @@ unsafe extern "C" fn json_alloc_echo(mut ctx: *mut nft_ctx) {
 unsafe extern "C" fn json_print_echo(mut ctx: *mut nft_ctx) {
 }
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct stmt {
-    _opaque: [u8; 0],
-}
-
 // ######## shared, from /home/matt/.c2r/tree/nftables/include/tcpopt.h
 
 pub type tcpopt_kind = i32;
@@ -16153,18 +15845,6 @@ pub struct mnl_err {
     pub err: i32,
     pub seqnum: u32,
     pub offset: u32,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_batch {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct expr {
-    _opaque: [u8; 0],
 }
 
 // ######## shared, from /usr/include/x86_64-linux-gnu/asm/swab.h
@@ -35392,12 +35072,6 @@ unsafe extern "C" fn c_main() -> i32 {
 
 // ######## /home/matt/.c2r/tree/libnetfilter_conntrack/src/callback.c
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nfattr {
-    _opaque: [u8; 0],
-}
-
 unsafe extern "C" fn __parse_message(mut nlh: *const nlmsghdr) -> i32 {
     let mut type_: u16 = (unsafe { NFNL_MSG_TYPE(((*nlh).nlmsg_type as i32)) }) as u16;
     let mut flags: u16 = (*nlh).nlmsg_flags;
@@ -37161,12 +36835,6 @@ pub struct jump {
     pub line: i32,
     pub jt: u8,
     pub jf: u8,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct stack {
-    _opaque: [u8; 0],
 }
 
 #[repr(C)]
@@ -51292,24 +50960,6 @@ pub unsafe extern "C" fn nfq_nlmsg_put2(mut buf: *mut core::ffi::c_char, mut typ
 
 // ######## /home/matt/.c2r/tree/libnetfilter_queue/utils/nfqnl_test.c
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nfq_data {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nfq_q_handle {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nfq_handle {
-    _opaque: [u8; 0],
-}
-
 /* returns packet id */
 unsafe extern "C" fn print_pkt(mut tb: *mut nfq_data) -> u32 {
     let mut id: i32 = 0;
@@ -52726,12 +52376,6 @@ unsafe extern "C" fn c_main(mut argc: i32, mut argv: *mut *mut core::ffi::c_char
 }
 
 // ######## /home/matt/.c2r/tree/libnftnl/examples/nft-events.c
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct nftnl_gen {
-    _opaque: [u8; 0],
-}
 
 unsafe extern "C" fn event2flag(mut event: u32) -> u32 {
     match event {
@@ -102144,18 +101788,6 @@ pub const OSFPDEL: i32 = 58;
 
 pub const MAXOPTSTRLEN: i32 = 128;
 
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct output_ctx {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct location {
-    _opaque: [u8; 0],
-}
-
 static mut IANA_opts: [nf_osf_opt; 27] = [nf_osf_opt { kind: 0u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 1u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 2u16, length: 4u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 3u16, length: 3u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 4u16, length: 2u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 5u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 6u16, length: 6u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 7u16, length: 6u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 8u16, length: 10u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 9u16, length: 2u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 10u16, length: 3u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 11u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 12u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 13u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 14u16, length: 3u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 15u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 16u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 17u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 18u16, length: 3u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 19u16, length: 18u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 20u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 21u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 22u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 23u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 24u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 25u16, length: 1u16, ..unsafe { core::mem::zeroed() } }, nf_osf_opt { kind: 26u16, length: 1u16, ..unsafe { core::mem::zeroed() } }];
 
 #[unsafe(no_mangle)]
@@ -107282,12 +106914,6 @@ pub const YYSYMBOL_exthdr_exists_expr: yysymbol_kind_t = 895;
 pub const YYSYMBOL_exthdr_key: yysymbol_kind_t = 896;
 
 pub const YYENOMEM: i32 = -2;
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct mnl_err {
-    _opaque: [u8; 0],
-}
 
 /* A type that is properly aligned for any stack member.  */
 #[repr(C)]
@@ -127408,18 +127034,6 @@ pub struct glob_t {
     pub gl_opendir: Option<unsafe extern "C" fn(*const core::ffi::c_char) -> *mut core::ffi::c_void>,
     pub gl_lstat: Option<unsafe extern "C" fn(*const core::ffi::c_char, *mut core::ffi::c_void) -> i32>,
     pub gl_stat: Option<unsafe extern "C" fn(*const core::ffi::c_char, *mut core::ffi::c_void) -> i32>,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct datatype {
-    _opaque: [u8; 0],
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct limit_rate {
-    _opaque: [u8; 0],
 }
 
 /* %if-c-only Reentrant structure and macros (non-C++). */
