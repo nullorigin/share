@@ -104505,7 +104505,6 @@ pub const YYPTRDIFF_MAXIMUM: i64 = 9223372036854775807;
 // macro YY_ATTRIBUTE_PURE = __attribute__ ((__pure__)) (not constant; expanded at each use)
 // macro YY_ATTRIBUTE_UNUSED = __attribute__ ((__unused__)) (not constant; expanded at each use)
 // macro YY_USE(E) = ((void) (E))
-// macro YY_IGNORE_MAYBE_UNINITIALIZED_END = _Pragma ("GCC diagnostic pop") (not constant; expanded at each use)
 // macro YY_ASSERT(E) = ((void) (0 && (E)))
 // macro YYSTACK_ALLOC = YYMALLOC (not constant; expanded at each use)
 // macro YYSTACK_FREE = YYFREE (not constant; expanded at each use)
@@ -107428,11 +107427,10 @@ pub unsafe extern "C" fn nft_parse(mut nft: *mut nft_ctx, mut scanner: *mut core
        or non-GCC compilers.  */
     let mut yylval: YYSTYPE = unsafe { core::mem::zeroed() };
     /* Location data for the lookahead symbol.  */
-    static mut yyloc_default: struct location = unsafe { core::mem::zeroed() };
+    static mut yyloc_default: location = unsafe { core::mem::zeroed() };
     let mut yylloc: location = yyloc_default;
     /* Number of syntax errors so far.  */
-    // C (declaration): int yynerrs = 0
-    todo!();
+    let mut nft_nerrs: i32 = 0;
     let mut yystate: i32 = 0;
     /* Number of tokens to shift before error messages enabled.  */
     let mut yyerrstatus: i32 = 0;
@@ -107467,7 +107465,7 @@ pub unsafe extern "C" fn nft_parse(mut nft: *mut nft_ctx, mut scanner: *mut core
     let mut yyval: YYSTYPE = unsafe { core::mem::zeroed() };
     let mut yyloc: location = unsafe { core::mem::zeroed() };
     /* The locations where the error started and ended.  */
-    let mut yyerror_range: [_Pragma ("GCC diagnostic pop"); 2] = unsafe { core::mem::zeroed() };
+    let mut yyerror_range: [location; 3] = unsafe { core::mem::zeroed() };
     /* The number of symbols on the RHS of the reduced rule.
          Keep to zero when no symbol should be popped.  */
     let mut yylen: i32 = 0;
@@ -107692,9 +107690,8 @@ pub unsafe extern "C" fn nft_parse(mut nft: *mut nft_ctx, mut scanner: *mut core
                                             }
                                         }
                                         yystate = yyn;
-                                        // C (statement): YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN * ++ yyvsp = yylval ;
-                                        todo!();
-                                        ((unsafe { _Pragma(c"GCC diagnostic pop".as_ptr()) }) * { yylsp = yylsp.offset(1); yylsp }) = yylloc;
+                                        (*{ yyvsp = yyvsp.offset(1); yyvsp }) = yylval;
+                                        (*{ yylsp = yylsp.offset(1); yylsp }) = yylloc;
                                         /* Discard the shifted token.  */
                                         yychar = -2;
                                         {
@@ -116267,9 +116264,8 @@ pub unsafe extern "C" fn nft_parse(mut nft: *mut nft_ctx, mut scanner: *mut core
                             yy_lac_established = 0;
                         }
                     }
-                    // C (statement): YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN * ++ yyvsp = yylval ;
-                    todo!();
-                    let mut yyerror_range: [_Pragma ("GCC diagnostic pop"); 2] = yylloc;
+                    (*{ yyvsp = yyvsp.offset(1); yyvsp }) = yylval;
+                    yyerror_range[2] = yylloc;
                     yylsp = yylsp.offset(1);
                     unsafe { location_update(&raw mut (*yylsp), (yyerror_range.as_mut_ptr() as *mut location), 2) };
                     /* Shift the error token.  */
@@ -116457,9 +116453,7 @@ unsafe extern "C" fn yy_symbol_value_print(mut yyo: *mut _IO_FILE, mut yykind: y
     if yyvaluep.is_null() {
         return;
     }
-    // C (statement): _Pragma ( "GCC diagnostic push" ) _Pragma ( "GCC diagnostic ignored \"-Wuninitialized\"" ) _Pragma ( "GCC diagnostic ignored \"-Wmaybe-uninitialized\"" ) YY_USE ( yykind ) ;
-    todo!();
-    unsafe { _Pragma(c"GCC diagnostic pop".as_ptr()) };
+    let _ = yykind;
 }
 
 /*---------------------------.
@@ -116717,8 +116711,8 @@ unsafe extern "C" fn yypcontext_token(mut yyctx: *const yypcontext_t) -> yysymbo
 }
 
 /* The location of the lookahead of this context.  */
-unsafe extern "C" fn yypcontext_location(mut yyctx: *const yypcontext_t) -> *mut struct location {
-    return ((*yyctx).yylloc as *mut struct location);
+unsafe extern "C" fn yypcontext_location(mut yyctx: *const yypcontext_t) -> *mut location {
+    return ((*yyctx).yylloc as *mut location);
 }
 
 /* User defined function to report a syntax error.  */
@@ -116791,8 +116785,1533 @@ unsafe extern "C" fn yydestruct(mut yymsg: *const core::ffi::c_char, mut yykind:
             unsafe { fprintf(stderr, c"\n".as_ptr()) };
         }
     }
-    // C (statement): _Pragma ( "GCC diagnostic push" ) _Pragma ( "GCC diagnostic ignored \"-Wuninitialized\"" ) _Pragma ( "GCC diagnostic ignored \"-Wmaybe-uninitialized\"" ) switch ( yykind ) { case YYSYMBOL_STRING : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_QUOTED_STRING : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_ASTERISK_STRING : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_line : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_base_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_add_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_replace_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_create_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_insert_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_table_or_id_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_chain_or_id_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_set_or_id_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_obj_or_id_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_delete_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_destroy_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_get_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_list_cmd_spec_table : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_list_cmd_spec_any : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_list_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_basehook_device_name : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_basehook_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_reset_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_flush_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_rename_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_import_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_export_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_monitor_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_describe_cmd : { cmd_free ( ( ( * yyvaluep ) . cmd ) ) ; } break ; case YYSYMBOL_table_block_alloc : { close_scope ( state ) ; table_free ( ( ( * yyvaluep ) . table ) ) ; } break ; case YYSYMBOL_chain_block_alloc : { close_scope ( state ) ; chain_free ( ( ( * yyvaluep ) . chain ) ) ; } break ; case YYSYMBOL_typeof_verdict_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_typeof_data_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_primary_typeof_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_typeof_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_block_alloc : { set_free ( ( ( * yyvaluep ) . set ) ) ; } break ; case YYSYMBOL_typeof_key_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_block_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_map_block_alloc : { set_free ( ( ( * yyvaluep ) . set ) ) ; } break ; case YYSYMBOL_flowtable_block_alloc : { flowtable_free ( ( ( * yyvaluep ) . flowtable ) ) ; } break ; case YYSYMBOL_flowtable_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_flowtable_list_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_flowtable_expr_member : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_data_type_atom_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_data_type_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_obj_block_alloc : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_type_identifier : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_chain_type : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_prio_spec : { expr_free ( ( ( * yyvaluep ) . prio_spec ) . expr ) ; } break ; case YYSYMBOL_extended_prio_name : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_extended_prio_spec : { expr_free ( ( ( * yyvaluep ) . prio_spec ) . expr ) ; } break ; case YYSYMBOL_dev_spec : { free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_policy_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_identifier : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_string : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_table_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_tableid_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_chain_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_chainid_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_chain_identifier : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_set_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_setid_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_set_identifier : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_flowtable_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_flowtableid_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_flowtable_identifier : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_obj_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_objid_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_obj_identifier : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_handle_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_position_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_index_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_rule_position : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_ruleid_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_comment_spec : { free_const ( ( ( * yyvaluep ) . string ) ) ; } break ; case YYSYMBOL_ruleset_spec : { handle_free ( & ( ( * yyvaluep ) . handle ) ) ; } break ; case YYSYMBOL_rule : { rule_free ( ( ( * yyvaluep ) . rule ) ) ; } break ; case YYSYMBOL_stmt_list : { stmt_list_free ( ( ( * yyvaluep ) . list ) ) ; free ( ( ( * yyvaluep ) . list ) ) ; } break ; case YYSYMBOL_stateful_stmt_list : { stmt_list_free ( ( ( * yyvaluep ) . list ) ) ; free ( ( ( * yyvaluep ) . list ) ) ; } break ; case YYSYMBOL_objref_stmt_counter : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_objref_stmt_limit : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_objref_stmt_quota : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_objref_stmt_synproxy : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_objref_stmt_tunnel : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_objref_stmt_ct : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_objref_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_stateful_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_xt_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_chain_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_verdict_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_verdict_map_stmt : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_verdict_map_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_verdict_map_list_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_verdict_map_list_member_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_ct_limit_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_connlimit_obj : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_connlimit_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_counter_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_counter_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_last_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_last_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_log_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_log_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_limit_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_limit_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_quota_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_quota_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_reject_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_reject_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_reject_with_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_nat_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_nat_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_tproxy_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_synproxy_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_synproxy_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_synproxy_obj : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_primary_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_shift_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_and_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_exclusive_or_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_inclusive_or_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_basic_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_concat_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_map_stmt_expr_set : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_map_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_prefix_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_range_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_multiton_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_masq_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_masq_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_redir_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_redir_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_dup_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_fwd_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_queue_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_queue_stmt_compat : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_queue_stmt_alloc : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_queue_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_queue_stmt_expr_simple : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_queue_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_elem_expr_stmt : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_elem_expr_stmt_alloc : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_map_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_meter_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_match_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_variable_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_symbol_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_ref_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_ref_symbol_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_integer_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_selector_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_primary_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_fib_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_osf_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_shift_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_and_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_exclusive_or_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_inclusive_or_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_basic_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_concat_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_prefix_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_range_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_multiton_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_map_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_list_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_list_member_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_meter_key_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_meter_key_expr_alloc : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_elem_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_elem_key_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_elem_expr_alloc : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_elem_stmt_list : { stmt_list_free ( ( ( * yyvaluep ) . list ) ) ; free ( ( ( * yyvaluep ) . list ) ) ; } break ; case YYSYMBOL_set_elem_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_set_lhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_set_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_initializer_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_counter_obj : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_quota_obj : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_secmark_obj : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_timeout_states : { timeout_states_free ( ( ( * yyvaluep ) . list ) ) ; } break ; case YYSYMBOL_timeout_state : { timeout_state_free ( ( ( * yyvaluep ) . timeout_state ) ) ; } break ; case YYSYMBOL_ct_obj_alloc : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_limit_obj : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_tunnel_obj : { obj_free ( ( ( * yyvaluep ) . obj ) ) ; } break ; case YYSYMBOL_relational_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_list_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_shift_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_and_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_exclusive_or_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_inclusive_or_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_basic_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_concat_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_boolean_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_keyword_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_primary_rhs_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_verdict_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_chain_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_meta_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_meta_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_socket_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_tunnel_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_numgen_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_xfrm_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_hash_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_rt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_ct_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_symbol_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_list_stmt_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_ct_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_payload_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_payload_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_payload_raw_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_eth_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_vlan_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_arp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_ip_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_icmp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_igmp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_ip6_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_icmp6_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_auth_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_esp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_comp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_udp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_udplite_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_tcp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_inner_inet_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_inner_eth_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_inner_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_vxlan_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_geneve_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_gre_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_gretap_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_optstrip_stmt : { stmt_free ( ( ( * yyvaluep ) . stmt ) ) ; } break ; case YYSYMBOL_dccp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_sctp_chunk_alloc : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_sctp_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_th_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_exthdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_hbh_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_rt_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_rt0_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_rt2_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_rt4_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_frag_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_dst_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_mh_hdr_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; case YYSYMBOL_exthdr_exists_expr : { expr_free ( ( ( * yyvaluep ) . expr ) ) ; } break ; default : break ; } YY_IGNORE_MAYBE_UNINITIALIZED_END
-    todo!();
+    match yykind {
+        YYSYMBOL_STRING => {
+            /* "string"  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_QUOTED_STRING => {
+            /* "quoted string"  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_ASTERISK_STRING => {
+            /* "string with a trailing asterisk"  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_line => {
+            /* line  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_base_cmd => {
+            /* base_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_add_cmd => {
+            /* add_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_replace_cmd => {
+            /* replace_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_create_cmd => {
+            /* create_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_insert_cmd => {
+            /* insert_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_table_or_id_spec => {
+            /* table_or_id_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_chain_or_id_spec => {
+            /* chain_or_id_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_set_or_id_spec => {
+            /* set_or_id_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_obj_or_id_spec => {
+            /* obj_or_id_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_delete_cmd => {
+            /* delete_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_destroy_cmd => {
+            /* destroy_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_get_cmd => {
+            /* get_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_list_cmd_spec_table => {
+            /* list_cmd_spec_table  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_list_cmd_spec_any => {
+            /* list_cmd_spec_any  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_list_cmd => {
+            /* list_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_basehook_device_name => {
+            /* basehook_device_name  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_basehook_spec => {
+            /* basehook_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_reset_cmd => {
+            /* reset_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_flush_cmd => {
+            /* flush_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_rename_cmd => {
+            /* rename_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_import_cmd => {
+            /* import_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_export_cmd => {
+            /* export_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_monitor_cmd => {
+            /* monitor_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_describe_cmd => {
+            /* describe_cmd  */
+            {
+                unsafe { cmd_free((*yyvaluep).cmd) };
+            }
+        }
+        YYSYMBOL_table_block_alloc => {
+            /* table_block_alloc  */
+            {
+                unsafe { close_scope(state) };
+                unsafe { table_free((*yyvaluep).table) };
+            }
+        }
+        YYSYMBOL_chain_block_alloc => {
+            /* chain_block_alloc  */
+            {
+                unsafe { close_scope(state) };
+                unsafe { chain_free((*yyvaluep).chain) };
+            }
+        }
+        YYSYMBOL_typeof_verdict_expr => {
+            /* typeof_verdict_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_typeof_data_expr => {
+            /* typeof_data_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_primary_typeof_expr => {
+            /* primary_typeof_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_typeof_expr => {
+            /* typeof_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_block_alloc => {
+            /* set_block_alloc  */
+            {
+                unsafe { set_free((*yyvaluep).set) };
+            }
+        }
+        YYSYMBOL_typeof_key_expr => {
+            /* typeof_key_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_block_expr => {
+            /* set_block_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_map_block_alloc => {
+            /* map_block_alloc  */
+            {
+                unsafe { set_free((*yyvaluep).set) };
+            }
+        }
+        YYSYMBOL_flowtable_block_alloc => {
+            /* flowtable_block_alloc  */
+            {
+                unsafe { flowtable_free((*yyvaluep).flowtable) };
+            }
+        }
+        YYSYMBOL_flowtable_expr => {
+            /* flowtable_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_flowtable_list_expr => {
+            /* flowtable_list_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_flowtable_expr_member => {
+            /* flowtable_expr_member  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_data_type_atom_expr => {
+            /* data_type_atom_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_data_type_expr => {
+            /* data_type_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_obj_block_alloc => {
+            /* obj_block_alloc  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_type_identifier => {
+            /* type_identifier  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_chain_type => {
+            /* chain_type  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_prio_spec => {
+            /* prio_spec  */
+            {
+                unsafe { expr_free(((*yyvaluep).prio_spec.expr as *mut expr)) };
+            }
+        }
+        YYSYMBOL_extended_prio_name => {
+            /* extended_prio_name  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_extended_prio_spec => {
+            /* extended_prio_spec  */
+            {
+                unsafe { expr_free(((*yyvaluep).prio_spec.expr as *mut expr)) };
+            }
+        }
+        YYSYMBOL_dev_spec => {
+            /* dev_spec  */
+            {
+                unsafe { free(((*yyvaluep).expr as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_policy_expr => {
+            /* policy_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_identifier => {
+            /* identifier  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_string => {
+            /* string  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_table_spec => {
+            /* table_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_tableid_spec => {
+            /* tableid_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_chain_spec => {
+            /* chain_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_chainid_spec => {
+            /* chainid_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_chain_identifier => {
+            /* chain_identifier  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_set_spec => {
+            /* set_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_setid_spec => {
+            /* setid_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_set_identifier => {
+            /* set_identifier  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_flowtable_spec => {
+            /* flowtable_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_flowtableid_spec => {
+            /* flowtableid_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_flowtable_identifier => {
+            /* flowtable_identifier  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_obj_spec => {
+            /* obj_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_objid_spec => {
+            /* objid_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_obj_identifier => {
+            /* obj_identifier  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_handle_spec => {
+            /* handle_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_position_spec => {
+            /* position_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_index_spec => {
+            /* index_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_rule_position => {
+            /* rule_position  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_ruleid_spec => {
+            /* ruleid_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_comment_spec => {
+            /* comment_spec  */
+            {
+                unsafe { free(((*yyvaluep).string as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_ruleset_spec => {
+            /* ruleset_spec  */
+            {
+                unsafe { handle_free(&raw mut (*yyvaluep).handle) };
+            }
+        }
+        YYSYMBOL_rule => {
+            /* rule  */
+            {
+                unsafe { rule_free((*yyvaluep).rule) };
+            }
+        }
+        YYSYMBOL_stmt_list => {
+            /* stmt_list  */
+            {
+                unsafe { stmt_list_free((*yyvaluep).list) };
+                unsafe { free(((*yyvaluep).list as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_stateful_stmt_list => {
+            /* stateful_stmt_list  */
+            {
+                unsafe { stmt_list_free((*yyvaluep).list) };
+                unsafe { free(((*yyvaluep).list as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_objref_stmt_counter => {
+            /* objref_stmt_counter  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_objref_stmt_limit => {
+            /* objref_stmt_limit  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_objref_stmt_quota => {
+            /* objref_stmt_quota  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_objref_stmt_synproxy => {
+            /* objref_stmt_synproxy  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_objref_stmt_tunnel => {
+            /* objref_stmt_tunnel  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_objref_stmt_ct => {
+            /* objref_stmt_ct  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_objref_stmt => {
+            /* objref_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_stateful_stmt => {
+            /* stateful_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_stmt => {
+            /* stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_xt_stmt => {
+            /* xt_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_chain_stmt => {
+            /* chain_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_verdict_stmt => {
+            /* verdict_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_verdict_map_stmt => {
+            /* verdict_map_stmt  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_verdict_map_expr => {
+            /* verdict_map_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_verdict_map_list_expr => {
+            /* verdict_map_list_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_verdict_map_list_member_expr => {
+            /* verdict_map_list_member_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_ct_limit_stmt_alloc => {
+            /* ct_limit_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_connlimit_obj => {
+            /* connlimit_obj  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_connlimit_stmt => {
+            /* connlimit_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_counter_stmt => {
+            /* counter_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_counter_stmt_alloc => {
+            /* counter_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_last_stmt_alloc => {
+            /* last_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_last_stmt => {
+            /* last_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_log_stmt => {
+            /* log_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_log_stmt_alloc => {
+            /* log_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_limit_stmt_alloc => {
+            /* limit_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_limit_stmt => {
+            /* limit_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_quota_stmt_alloc => {
+            /* quota_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_quota_stmt => {
+            /* quota_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_reject_stmt => {
+            /* reject_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_reject_stmt_alloc => {
+            /* reject_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_reject_with_expr => {
+            /* reject_with_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_nat_stmt => {
+            /* nat_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_nat_stmt_alloc => {
+            /* nat_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_tproxy_stmt => {
+            /* tproxy_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_synproxy_stmt => {
+            /* synproxy_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_synproxy_stmt_alloc => {
+            /* synproxy_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_synproxy_obj => {
+            /* synproxy_obj  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_primary_stmt_expr => {
+            /* primary_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_shift_stmt_expr => {
+            /* shift_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_and_stmt_expr => {
+            /* and_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_exclusive_or_stmt_expr => {
+            /* exclusive_or_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_inclusive_or_stmt_expr => {
+            /* inclusive_or_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_basic_stmt_expr => {
+            /* basic_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_concat_stmt_expr => {
+            /* concat_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_map_stmt_expr_set => {
+            /* map_stmt_expr_set  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_map_stmt_expr => {
+            /* map_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_prefix_stmt_expr => {
+            /* prefix_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_range_stmt_expr => {
+            /* range_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_multiton_stmt_expr => {
+            /* multiton_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_stmt_expr => {
+            /* stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_masq_stmt => {
+            /* masq_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_masq_stmt_alloc => {
+            /* masq_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_redir_stmt => {
+            /* redir_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_redir_stmt_alloc => {
+            /* redir_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_dup_stmt => {
+            /* dup_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_fwd_stmt => {
+            /* fwd_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_queue_stmt => {
+            /* queue_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_queue_stmt_compat => {
+            /* queue_stmt_compat  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_queue_stmt_alloc => {
+            /* queue_stmt_alloc  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_queue_expr => {
+            /* queue_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_queue_stmt_expr_simple => {
+            /* queue_stmt_expr_simple  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_queue_stmt_expr => {
+            /* queue_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_elem_expr_stmt => {
+            /* set_elem_expr_stmt  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_elem_expr_stmt_alloc => {
+            /* set_elem_expr_stmt_alloc  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_stmt => {
+            /* set_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_map_stmt => {
+            /* map_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_meter_stmt => {
+            /* meter_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_match_stmt => {
+            /* match_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_variable_expr => {
+            /* variable_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_symbol_expr => {
+            /* symbol_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_ref_expr => {
+            /* set_ref_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_ref_symbol_expr => {
+            /* set_ref_symbol_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_integer_expr => {
+            /* integer_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_selector_expr => {
+            /* selector_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_primary_expr => {
+            /* primary_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_fib_expr => {
+            /* fib_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_osf_expr => {
+            /* osf_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_shift_expr => {
+            /* shift_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_and_expr => {
+            /* and_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_exclusive_or_expr => {
+            /* exclusive_or_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_inclusive_or_expr => {
+            /* inclusive_or_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_basic_expr => {
+            /* basic_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_concat_expr => {
+            /* concat_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_prefix_rhs_expr => {
+            /* prefix_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_range_rhs_expr => {
+            /* range_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_multiton_rhs_expr => {
+            /* multiton_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_map_expr => {
+            /* map_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_expr => {
+            /* expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_expr => {
+            /* set_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_list_expr => {
+            /* set_list_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_list_member_expr => {
+            /* set_list_member_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_meter_key_expr => {
+            /* meter_key_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_meter_key_expr_alloc => {
+            /* meter_key_expr_alloc  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_elem_expr => {
+            /* set_elem_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_elem_key_expr => {
+            /* set_elem_key_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_elem_expr_alloc => {
+            /* set_elem_expr_alloc  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_elem_stmt_list => {
+            /* set_elem_stmt_list  */
+            {
+                unsafe { stmt_list_free((*yyvaluep).list) };
+                unsafe { free(((*yyvaluep).list as *mut core::ffi::c_void)) };
+            }
+        }
+        YYSYMBOL_set_elem_stmt => {
+            /* set_elem_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_set_lhs_expr => {
+            /* set_lhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_set_rhs_expr => {
+            /* set_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_initializer_expr => {
+            /* initializer_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_counter_obj => {
+            /* counter_obj  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_quota_obj => {
+            /* quota_obj  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_secmark_obj => {
+            /* secmark_obj  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_timeout_states => {
+            /* timeout_states  */
+            {
+                unsafe { timeout_states_free((*yyvaluep).list) };
+            }
+        }
+        YYSYMBOL_timeout_state => {
+            /* timeout_state  */
+            {
+                unsafe { timeout_state_free((*yyvaluep).timeout_state) };
+            }
+        }
+        YYSYMBOL_ct_obj_alloc => {
+            /* ct_obj_alloc  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_limit_obj => {
+            /* limit_obj  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_tunnel_obj => {
+            /* tunnel_obj  */
+            {
+                unsafe { obj_free((*yyvaluep).obj) };
+            }
+        }
+        YYSYMBOL_relational_expr => {
+            /* relational_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_list_rhs_expr => {
+            /* list_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_rhs_expr => {
+            /* rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_shift_rhs_expr => {
+            /* shift_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_and_rhs_expr => {
+            /* and_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_exclusive_or_rhs_expr => {
+            /* exclusive_or_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_inclusive_or_rhs_expr => {
+            /* inclusive_or_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_basic_rhs_expr => {
+            /* basic_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_concat_rhs_expr => {
+            /* concat_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_boolean_expr => {
+            /* boolean_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_keyword_expr => {
+            /* keyword_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_primary_rhs_expr => {
+            /* primary_rhs_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_verdict_expr => {
+            /* verdict_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_chain_expr => {
+            /* chain_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_meta_expr => {
+            /* meta_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_meta_stmt => {
+            /* meta_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_socket_expr => {
+            /* socket_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_tunnel_expr => {
+            /* tunnel_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_numgen_expr => {
+            /* numgen_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_xfrm_expr => {
+            /* xfrm_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_hash_expr => {
+            /* hash_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_rt_expr => {
+            /* rt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_ct_expr => {
+            /* ct_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_symbol_stmt_expr => {
+            /* symbol_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_list_stmt_expr => {
+            /* list_stmt_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_ct_stmt => {
+            /* ct_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_payload_stmt => {
+            /* payload_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_payload_expr => {
+            /* payload_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_payload_raw_expr => {
+            /* payload_raw_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_eth_hdr_expr => {
+            /* eth_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_vlan_hdr_expr => {
+            /* vlan_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_arp_hdr_expr => {
+            /* arp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_ip_hdr_expr => {
+            /* ip_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_icmp_hdr_expr => {
+            /* icmp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_igmp_hdr_expr => {
+            /* igmp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_ip6_hdr_expr => {
+            /* ip6_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_icmp6_hdr_expr => {
+            /* icmp6_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_auth_hdr_expr => {
+            /* auth_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_esp_hdr_expr => {
+            /* esp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_comp_hdr_expr => {
+            /* comp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_udp_hdr_expr => {
+            /* udp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_udplite_hdr_expr => {
+            /* udplite_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_tcp_hdr_expr => {
+            /* tcp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_inner_inet_expr => {
+            /* inner_inet_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_inner_eth_expr => {
+            /* inner_eth_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_inner_expr => {
+            /* inner_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_vxlan_hdr_expr => {
+            /* vxlan_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_geneve_hdr_expr => {
+            /* geneve_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_gre_hdr_expr => {
+            /* gre_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_gretap_hdr_expr => {
+            /* gretap_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_optstrip_stmt => {
+            /* optstrip_stmt  */
+            {
+                unsafe { stmt_free((*yyvaluep).stmt) };
+            }
+        }
+        YYSYMBOL_dccp_hdr_expr => {
+            /* dccp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_sctp_chunk_alloc => {
+            /* sctp_chunk_alloc  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_sctp_hdr_expr => {
+            /* sctp_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_th_hdr_expr => {
+            /* th_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_exthdr_expr => {
+            /* exthdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_hbh_hdr_expr => {
+            /* hbh_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_rt_hdr_expr => {
+            /* rt_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_rt0_hdr_expr => {
+            /* rt0_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_rt2_hdr_expr => {
+            /* rt2_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_rt4_hdr_expr => {
+            /* rt4_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_frag_hdr_expr => {
+            /* frag_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_dst_hdr_expr => {
+            /* dst_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_mh_hdr_expr => {
+            /* mh_hdr_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        YYSYMBOL_exthdr_exists_expr => {
+            /* exthdr_exists_expr  */
+            {
+                unsafe { expr_free((*yyvaluep).expr) };
+            }
+        }
+        _ => {
+        }
+    }
 }
 
 // ######## /home/matt/.c2r/tree/nftables/src/parser_json.c
